@@ -1,0 +1,20 @@
+h1{
+	color: red;
+	text-align: center;
+}
+#main{
+	margin: auto;
+	width: 60%;
+	border: 2px solid black;
+	padding: 5px;
+	border-radius: 30%;
+	text-align: center;
+	font-size: 30pt;
+	color: white;
+	font-weight: bolder;
+
+}
+body{
+	background-color: lightgrey;
+	background-image: url('https://i.ytimg.com/vi/sU20by-LGuA/maxresdefault.jpg');
+}
