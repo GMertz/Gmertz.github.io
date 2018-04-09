@@ -13,7 +13,7 @@ h2{
 	width: 60%;
 	border: 2px solid black;
 	padding: 5px;
-	border-radius: 30%;
+	overflow: hidden;
 	text-align: center;
 	font-size: 30pt;
 	color: white;
