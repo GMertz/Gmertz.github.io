@@ -26,9 +26,10 @@ body{
 }
 #left{
 	float: left;
-	width: 400px;
+	width: 200px;
 	overflow: hidden;
 	font-size: 12pt;
 	background-color: lightgrey;
-	opacity: 0.5;
+	opacity: 0.8;
+	border: solid black 2px;
 }
