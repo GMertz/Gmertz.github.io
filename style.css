@@ -1,6 +1,12 @@
 h1{
 	color: red;
 	text-align: center;
+	font-size: 24pt;
+}
+h2{
+	color: red;
+	text-align: left;
+	font-size 18pt;	
 }
 #main{
 	margin: auto;
@@ -17,4 +23,10 @@ h1{
 body{
 	background-color: lightgrey;
 	background-image: url('https://i.ytimg.com/vi/sU20by-LGuA/maxresdefault.jpg');
+}
+#left{
+	float: left;
+	width: 400px;
+	overflow: hidden;
+	font-size: 12pt;
 }
