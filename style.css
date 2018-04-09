@@ -29,4 +29,6 @@ body{
 	width: 400px;
 	overflow: hidden;
 	font-size: 12pt;
+	background-color: lightgrey;
+	opacity: 0.5;
 }
