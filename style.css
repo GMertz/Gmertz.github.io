@@ -10,7 +10,8 @@ h2{
 }
 #main{
 	margin: auto;
-	width: 60%;
+	width: 80%;
+	height: 800px;
 	border: 2px solid black;
 	padding: 5px;
 	overflow: hidden;
@@ -18,11 +19,12 @@ h2{
 	font-size: 30pt;
 	color: white;
 	font-weight: bolder;
+	background-image: url('https://i.ytimg.com/vi/sU20by-LGuA/maxresdefault.jpg');
+	background-position: center;
 
 }
 body{
 	background-color: lightgrey;
-	background-image: url('https://i.ytimg.com/vi/sU20by-LGuA/maxresdefault.jpg');
 }
 #left{
 	float: left;
