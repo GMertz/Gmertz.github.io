@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
 	<title>Gabe's Website</title>
 	<link rel="stylesheet" type="text/css" href="./style.css"/>
 	<script>
 		/*
 			add mouse interactivity
-			add eventlisteners, are the buttons blocked by divs?
-
-
 		*/
+		window.onload = function(){
+			var info = document.getElementById("info");
+			document.getElementById("orbiter-1").addEventListener("mouseover",function(){
+				info.innerHTML="Conway's Game of Life";
+			});
+			document.getElementById("orbiter-2").addEventListener("mouseover",function(){
+				info.innerHTML="My Github";
 
-		
+			})
+			document.getElementById("orbiter-3").addEventListener("mouseover",function(){
+				info.innerHTML="Gabe's Chat";
+				info.backgroundColor="#38ff2e";
+			});;
+			document.getElementById("orbiter-3").addEventListener("mouseout",function(){info.innerHTML="";});
+			document.getElementById("orbiter-2").addEventListener("mouseout",function(){info.innerHTML="";});
+			document.getElementById("orbiter-1").addEventListener("mouseout",function(){info.innerHTML="";});
+		}
 	</script>
 </head>
 <body>
@@ -20,32 +31,13 @@
 	<div id="orbit-space-1">
 		<div id="orbit-space-2">
 			<div id="orbit-space-3">
-				<div id="orbiter-3"></div>
+				<a id="orbiter-3" href="http://gabes-chat.appspot.com"></a>
 			</div>
-			<div id="orbiter-2"></div>
+			<a id="orbiter-2" href="https://github.com/gmertz"></a>
 		</div>
-		<div id="orbiter-1"></div>
+		<a id="orbiter-1" href="./conway.html"></a>
 	</div>
 	</div>
+	<div id="info"></div>
 </body>
 </html>
-=======
-	<link href="style.css" type="text/css" rel="stylesheet"/>
-	<title>ITS GMERTZ @ GITHUB </title>
-</head>
-<body>
-<h1>Hi there, welcome to my webplace</h1>
-<div id="left">
-		<h2>Links</h2>
-		<a href="https://github.com/gmertz">Rest of my Github</a>
-		<br/>
-		<a href="http://35.227.80.129/">My GoogleCloud Web Site</a>	
-		<a href="./conway.html">Conway</a>		
-
-	</div>
-</div>
-<div id="main">
-	<p>Wooooowwweeeee look at this site!</p>
-</body>
-</html>
->>>>>>> 4ef2ea646d838921da1bc9edf2e8fa76b5be9aa9

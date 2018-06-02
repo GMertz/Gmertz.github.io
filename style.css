@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 body, html{
 	background-color: black;
 	display: grid;
@@ -49,6 +48,7 @@ border: dashed 2px #ff2e38;
 	left:30px;
 	background-color:#2e4dff;
 	border-radius: 50%;
+	display: block;
 }
 #orbiter-2{
 	width: 40px;
@@ -58,6 +58,7 @@ border: dashed 2px #ff2e38;
 	top:50px;
 	background-color:#ff2e38;
 	border-radius: 50%;	
+	display: block;
 }
 #orbiter-3{
 	width: 30px;
@@ -67,66 +68,35 @@ border: dashed 2px #ff2e38;
 	position:absolute;
 	background-color:#38ff2e;
 	border-radius: 50%;
+	display: block;
 }
 #orbiter-1:hover{background-color: lightblue;}
 #orbiter-2:hover{background-color: blue;}
 #orbiter-3:hover{background-color: yellow;}
-#theSun{/*this is centered,now center orbits   */
+#theSun{
 	margin: auto;
 	width: 200px;
 	height: 200px;
 	border-radius: 50%;
 	background-color: #ff902e;
 }
+#info{
+	position: fixed;
+	left: 10px;
+	bottom: 30px;
+	width: 150px;
+	height: 75px;
+	font-size: 15pt;
+	font-color: white;
+	font-weight: bolder;
+	font-family: "Verdana", san-serif;
+	background-color: lightgrey;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 1.2em;
+}
 
 
 @keyframes orbit{
 	100% {transform: rotate(360deg);}
 }
-
-/*@keyframes perspective{
-	0% 	{height:50px;width:50px;top:-25px;}
-	25%	{height:75px;width:75px;top:-37.5px;}
-	50%  {width:100px;height:100px;top:-50px;}
-	75% {width:75px;height:75px;top:-37.5px;}
-	100% {width:50px;height:50px;top:-25px;}
-}*/
-=======
-h1{
-	color: red;
-	text-align: center;
-	font-size: 24pt;
-}
-h2{
-	color: red;
-	text-align: left;
-	font-size 18pt;	
-}
-#main{
-	margin: auto;
-	width: 80%;
-	height: 800px;
-	border: 2px solid black;
-	padding: 5px;
-	overflow: hidden;
-	text-align: center;
-	font-size: 30pt;
-	color: white;
-	font-weight: bolder;
-	background-image: url('https://i.ytimg.com/vi/sU20by-LGuA/maxresdefault.jpg');
-	background-position: center;
-
-}
-body{
-	background-color: lightgrey;
-}
-#left{
-	float: left;
-	width: 200px;
-	overflow: hidden;
-	font-size: 12pt;
-	background-color: lightgrey;
-	opacity: 0.8;
-	border: solid black 2px;
-}
->>>>>>> 4ef2ea646d838921da1bc9edf2e8fa76b5be9aa9
