@@ -82,15 +82,14 @@ border: dashed 2px #ff2e38;
 }
 #info{
 	position: fixed;
-	left: 10px;
-	bottom: 30px;
+	left: 45%;
+	top: 45%;
 	width: 150px;
 	height: 75px;
 	font-size: 15pt;
-	font-color: white;
+	color: white;
 	font-weight: bolder;
 	font-family: "Verdana", san-serif;
-	background-color: lightgrey;
 	border-radius: 50%;
 	text-align: center;
 	padding-top: 1.2em;

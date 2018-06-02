@@ -3,26 +3,36 @@
 <head>
 	<title>Gabe's Website</title>
 	<link rel="stylesheet" type="text/css" href="./style.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<script>
 		/*
 			add mouse interactivity
 		*/
 		window.onload = function(){
 			var info = document.getElementById("info");
+			var timer = null;
 			document.getElementById("orbiter-1").addEventListener("mouseover",function(){
 				info.innerHTML="Conway's Game of Life";
+				if(timer !== null)
+					clearInterval(timer);
 			});
 			document.getElementById("orbiter-2").addEventListener("mouseover",function(){
 				info.innerHTML="My Github";
-
+				if(timer !== null)
+					clearInterval(timer);
 			})
 			document.getElementById("orbiter-3").addEventListener("mouseover",function(){
 				info.innerHTML="Gabe's Chat";
-				info.backgroundColor="#38ff2e";
+				if(timer !== null)
+					clearInterval(timer);
 			});;
-			document.getElementById("orbiter-3").addEventListener("mouseout",function(){info.innerHTML="";});
-			document.getElementById("orbiter-2").addEventListener("mouseout",function(){info.innerHTML="";});
-			document.getElementById("orbiter-1").addEventListener("mouseout",function(){info.innerHTML="";});
+			document.getElementById("orbiter-3").addEventListener("mouseout",setTimer);
+			document.getElementById("orbiter-2").addEventListener("mouseout",setTimer);
+			document.getElementById("orbiter-1").addEventListener("mouseout",setTimer);
+
+			function setTimer(){
+				timer = setTimeout(()=>{info.innerHTML="";},1000);
+			}
 		}
 	</script>
 </head>
