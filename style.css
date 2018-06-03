@@ -26,7 +26,7 @@ body, html{
 	-webkit-animation:orbit 20s linear infinite;
 	border-radius: 50%;
 	overflow: visible;
-border: dashed 2px #ff2e38;
+	border: dashed 2px #ff2e38;
 }
 #orbit-space-3{
 	width: 600px;
