@@ -1,2 +1,2 @@
 # Gmertz.github.io
-This is my website, give it a looksy
+This is my website, have a look or two.
