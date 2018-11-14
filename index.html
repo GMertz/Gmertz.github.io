@@ -12,17 +12,17 @@
 			var info = document.getElementById("info");
 			var timer = null;
 			document.getElementById("orbiter-1").addEventListener("mouseover",function(){
-				info.innerHTML="Conway's Game of Life";
+				info.innerHTML="My Github";
 				if(timer !== null)
 					clearInterval(timer);
 			});
 			document.getElementById("orbiter-2").addEventListener("mouseover",function(){
-				info.innerHTML="My Github";
+				info.innerHTML="Chat App";
 				if(timer !== null)
 					clearInterval(timer);
 			})
 			document.getElementById("orbiter-3").addEventListener("mouseover",function(){
-				info.innerHTML="Gabe's Chat";
+				info.innerHTML="Conway's Game of Life";
 				if(timer !== null)
 					clearInterval(timer);
 			});;
@@ -41,13 +41,26 @@
 	<div id="orbit-space-1">
 		<div id="orbit-space-2">
 			<div id="orbit-space-3">
-				<a id="orbiter-3" href="http://gabes-chat.appspot.com"></a>
+				<a id="orbiter-3" href="./conway/conway.html"></a>
 			</div>
-			<a id="orbiter-2" href="https://github.com/gmertz"></a>
+			<a id="orbiter-2" href="http://gabes-chat.appspot.com"></a>
 		</div>
-		<a id="orbiter-1" href="./conway.html"></a>
+		<a id="orbiter-1" href="https://github.com/gmertz"></a>
 	</div>
 	</div>
 	<div id="info"></div>
+	<div id="bio">
+		Welcome to Gabe's github website! 
+		<br/><br/>
+		I'm a third year CS & Math Major at Lewis & Clark College
+		<br/><br/>
+		Click some planets or links to check out my stuff, its rad, I promise ;)
+		<br/><br/><br/>
+		Links:<br/>
+		<a href="https://github.com/gmertz">Github</a><br/>
+		<a href="http://gabes-chat.appspot.com">Chat App</a><br/>
+		<a href="./conway/conway.html">Game of Life</a><br/>
+
+	</div>
 </body>
 </html>
