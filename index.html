@@ -5,14 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="./style.css"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<script>
-		/*
-			add mouse interactivity
-		*/
 		window.onload = function(){
 			var info = document.getElementById("info");
 			var timer = null;
 			document.getElementById("orbiter-1").addEventListener("mouseover",function(){
-				info.innerHTML="My Github";
+				info.innerHTML="Github";
 				if(timer !== null)
 					clearInterval(timer);
 			});
@@ -37,7 +34,7 @@
 	</script>
 </head>
 <body>
-	<div id="theSun">
+	<div id="center">
 	<div id="orbit-space-1">
 		<div id="orbit-space-2">
 			<div id="orbit-space-3">
