@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+	<script>
+		var can,ctx,current = 0, intr, circs = [], wid = 5, canw, canh, lastInput;
+		window.onload = function()
+		{
+			can = document.getElementById("thing"),
+			ctx = can.getContext("2d");
+			can.width = 800;
+			can.height = 800;
+			canw = can.width;
+			canh = can.height;
+			clear();
+			ctx.lineWidth = 3;
+			document.addEventListener("keydown",function(e){
+				switch(e.keyCode)
+				{
+					case 37://left
+						lastInput = 'l';
+						break;
+					case 38://up
+						lastInput = 'u';
+						break;
+					case 39://right
+						lastInput = 'r';
+						break;
+					case 40://down
+						lastInput = 'd';
+						break;
+					default:
+				}
+			});
+			document.getElementById("one").addEventListener("click",function()
+			{
+				if(intr)clearInterval(intr);
+				if(current == 1)
+				{
+					clear();
+					current = 0;
+					return;
+				}
+				current = 1;
+
+				clear();
+				circs = [];
+
+				one(1,canw/2,canh/2,Math.PI/2,canw/4);
+				one(1,canw/2,canh/2,-Math.PI/2,canw/4);
+
+				var cx=250,cy=250, ang = 0, way = 1;
+				intr = setInterval(function()
+					{
+						ctx.fillStyle = "black";
+						ctx.fillRect(0,0,canw,canh);
+						for(let c of circs)
+						{
+							ctx.beginPath();
+							ctx.fillStyle = relativeCol(cx,cy,c[0],c[1]);
+							ctx.fillRect(c[0]-wid/2,c[1]-wid/2,wid,wid);
+							ctx.fill();
+						}
+						ang+=Math.PI/(51-Math.random()*30);
+						cx = canw/2+Math.cos(ang)*canw/5;
+						cy = canh/2+Math.sin(ang)*canw/5;
+
+						wid += (.5+(wid/50))*way;
+						if(wid > 200)
+						{
+							way *=-1;
+							wid = 200;
+						}else if (wid < 1)
+						{
+							wid = 1;
+							way *= -1;
+						}
+					}
+					,1000/30);
+
+			});
+			document.getElementById("two").addEventListener("click",two);
+			document.getElementById("three").addEventListener("click",three);
+		}
+		function randomColor()
+		{
+			return `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+		}
+		function relativeCol(ox,oy,x,y)
+		{
+			//ctx.globalAlpha = Math.sqrt(Math.pow(x-ox,2)+Math.pow(y-oy,2));
+			//return randomColor();
+			return `rgb(${Math.abs(x-ox)},${(ox-oy)+Math.sqrt(Math.pow(ox-x,2)+Math.pow(oy-y,2))},${Math.abs(y-oy)})`
+		}
+		function relativeCol2(ox,oy,x,y)
+		{
+			return `rgb(${Math.abs(x-ox)},${.8*Math.sqrt(Math.pow(Math.abs(ox-x),2)+Math.pow(Math.abs(oy-y),2))},${Math.abs(y-oy)})`
+		}
+		function clear()
+		{
+			ctx.globalAlpha = 1;
+			ctx.fillStyle = "black";
+			ctx.fillRect(0,0,canw,canh);
+		}
+		function one(dep,x,y,ang,len)
+		{
+			if(dep > 7){
+				circs.push([x,y]);
+				return;
+			}
+			var dx = Math.cos(ang)*len, dy = Math.sin(ang)*len;
+			if(dep > 1)
+			{
+				x +=dx;
+				y -=dy;
+			}
+
+			one(dep+1,x,y,ang-(Math.PI/3),len/1.5);
+			one(dep+1,x,y,ang+(Math.PI/3),len/1.5);
+			one(dep+1,x,y,ang,len/1.5);
+
+		}
+
+		var Snake = function(x,y)
+		{
+			this.head = {x:x,y:y}
+			this.len = 2;
+			this.bod = [{x:x,y:y-1}];
+			this.vel = {x:0,y:1};
+			this.move = function()
+			{
+				var prev = {x:this.head.x-this.vel.x,y:this.head.y-this.vel.y};
+				for(var i = 0; i < this.bod.length; i++)
+				{
+					var t = this.bod[i];
+					this.bod[i] = prev;
+					prev = t;
+				}
+			} 
+			this.draw = function()
+			{
+				var copy = this.bod.slice(0,this.bod.length);
+				copy.unshift(this.head);
+				return copy;
+			}
+			this.turn = function(dir)
+			{
+				if(dir == 'u')
+					dir = {x:0,y:-1};
+				else if(dir == 'r')
+					dir = {x:1,y:0};
+				else if(dir == 'l')
+					dir = {x:-1,y:0};
+				else if(dir == 'd')
+					dir = {x:0,y:1};
+				this.vel = dir;
+			}
+
+		}
+
+		var SnakeGame = function(dim)
+		{
+			var gameDim = dim;
+			var squareWid = canw/gameDim;
+			var board;
+			var snek;
+			var fruit;
+
+			this.init = function()
+			{
+				board = [];
+				snek = new Snake(Math.floor(gameDim/2),Math.floor(gameDim/2),gameDim);
+				fruit;
+				clear();
+				this.drawGrid();
+				this.setFruit();	
+			}
+			
+
+			this.setFruit = function()
+			{
+				this.clearBoard();
+				var moves = [];
+				for (let c of snek.draw())
+				{
+					board[c.x][c.y] = 1;
+				}
+				for(var i = 0; i < dim;  i++)
+					for(var k = 0; k < dim;  k++)
+						if(!board[i][k])
+							moves.push([i,k]);
+
+				var t = Math.floor(Math.random()*moves.length);
+				fruit = {x:moves[t][0],y:moves[t][1]};
+			}
+
+			this.drawCell = function(x,y,color)
+			{
+				ctx.beginPath();
+				ctx.fillStyle = color;
+				ctx.fillRect(x*squareWid,y*squareWid,squareWid,squareWid);
+				ctx.fill();
+			}
+			this.checkBody = function(mv)
+			{
+				for(let c of snek.bod)
+				{
+					if(c.x == mv.x && c.y == mv.y)
+						return true;
+				}
+				return false;
+			}
+			this.check = function()
+			{
+				var s = snek;
+				var mv = {
+					x:s.head.x + s.vel.x,
+					y:s.head.y + s.vel.y
+				};
+				if(mv.x > gameDim-1
+				|| mv.x < 0
+				|| mv.y >gameDim-1
+				|| mv.y < 0
+				|| this.checkBody(mv))
+				{
+					return false;
+				}
+				else
+				{
+					s.head.x +=s.vel.x;
+					s.head.y +=s.vel.y;
+				}
+				if(s.head.x == fruit.x && s.head.y == fruit.y)
+				{
+					this.drawCell(fruit.x,fruit.y,"black");
+					s.bod.push(s.bod[s.bod.length-1]);
+					this.setFruit();
+				}
+				return true;
+			}
+
+			this.tick = function(self)
+			{
+				var pre = snek.draw();
+				if(lastInput)
+				{
+					snek.turn(lastInput);
+					lastInput = 0;
+				}
+
+				if(self.check())
+				{
+					snek.move();
+					for(let tod of pre)
+						self.drawCell(tod.x,tod.y,"black");
+					for(let tod of snek.draw())
+						self.drawCell(tod.x,tod.y,"white");
+					
+					self.drawCell(fruit.x,fruit.y,randomColor());
+					self.drawGrid();
+				}
+				else
+				{
+					this.init();
+				}
+			}
+			this.clearBoard = function()
+			{
+				board = [];
+				for(var i = 0; i < gameDim; i++){
+					var row = []
+					for(var k = 0; k < gameDim; k++)
+						row.push(0);
+					board.push(row);
+				}
+			}
+
+			this.drawGrid = function()
+			{
+				ctx.strokeStyle = "grey";
+				for(var i = 0; i <= gameDim; i++)
+				{
+					ctx.beginPath();
+					ctx.moveTo(squareWid*i,0);
+					ctx.lineTo(squareWid*i,canh);
+					ctx.stroke();
+
+					ctx.beginPath();
+					ctx.moveTo(0,squareWid*i);
+					ctx.lineTo(canw,squareWid*i);
+					ctx.stroke();
+				}
+			}
+		}
+
+		function two()
+		{
+			var game = new SnakeGame(20);
+			game.init();
+			if(current == 2)
+			{
+				current = 0;
+				clear();
+				clearInterval(intr);
+				return;
+			}		
+			if(intr)clearInterval(intr);
+			current = 2;
+			intr = setInterval(()=>game.tick(game),1000/13);
+		}
+		function three()
+		{
+			document.getElementById("bod").style.backgroundColor = randomColor();
+		}
+
+
+
+	</script>
+
+	<style>
+		body
+		{
+			background-color: black; text-align: center;
+			margin:0;
+			overflow: hidden;
+		}
+		#banner
+		{
+			position: fixed; width: 100%; height: 40px;
+			border-radius: 2px; text-align: center; font-size:12pt;
+			padding: 0; color:white;
+		}
+		#butt/*;)*/
+		{
+			position: fixed; text-align: center; left: 0; top: 40px; width: 105px;
+		}
+		button
+		{
+			border-radius: 50%; width: 50px; height: 50px; display: inline;
+			background-color: white;
+		}
+		canvas
+		{
+			margin-top: 50px;
+			width: 500px; height: 500px; display: inline;
+		}
+		button:hover
+		{
+			background-color: purple;
+		}
+		#oneControl
+		{
+			visibility: hidden;
+		}
+
+	</style>
+</head>
+<body id="bod">
+	<div id="banner">
+		My Google Cloud trial ended, so chat is no longer live. <a href="https://github.com/gmertz/Chat">Code</a> is still on github.
+		<br/>	
+		Sorry chats dead, click a button on the left.
+		
+	</div>
+	<div id="butt">
+		<button id="one">1</button>
+		<button id="two">2</button>
+		<button id="three">3</button>
+	</div>
+	
+	<canvas id="thing" ></canvas>
+
+	
+</body>
+</html>
