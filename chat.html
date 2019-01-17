@@ -3,18 +3,26 @@
 <head>
 	<title>Chat</title>
 	<script>
-		var can,ctx,current = 0, intr, circs = [], wid = 5, canw, canh, lastInput;
+		var can,ctx,current = 0, intr, circs = [], wid = 5, canw, canh, lastInput, backCol = "black";
 		window.onload = function()
 		{
+			//---Initialize Global Variables---
 			can = document.getElementById("thing"),
 			ctx = can.getContext("2d");
 			can.width = 800;
 			can.height = 800;
 			canw = can.width;
 			canh = can.height;
-			clear();
 			ctx.lineWidth = 3;
+
+			//---Set canvas on one()---
+			clear();
+			one();
+
+			//---Event listeners---
 			document.addEventListener("keydown",function(e){
+				if(current != 2)return;
+
 				switch(e.keyCode)
 				{
 					case 37://left
@@ -32,9 +40,32 @@
 					default:
 				}
 			});
-			document.getElementById("one").addEventListener("click",function()
-			{
-				if(intr)clearInterval(intr);
+			document.getElementById("one").addEventListener("click",one);
+			document.getElementById("two").addEventListener("click",two);
+			document.getElementById("three").addEventListener("click",three);
+		}
+		function randomColor()
+		{
+			return `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
+		}
+		function relativeCol(ox,oy,x,y)
+		{
+			//ctx.globalAlpha = Math.sqrt(Math.pow(x-ox,2)+Math.pow(y-oy,2));
+			return `rgb(${Math.abs(x-ox)},${(ox-oy)+Math.sqrt(Math.pow(ox-x,2)+Math.pow(oy-y,2))},${Math.abs(y-oy)})`;
+		}
+		function relativeCol2(ox,oy,x,y)
+		{
+			return `rgb(${Math.abs(x-ox)},${.8*Math.sqrt(Math.pow(Math.abs(ox-x),2)+Math.pow(Math.abs(oy-y),2))},${Math.abs(y-oy)})`;
+		}
+		function clear()
+		{
+			ctx.globalAlpha = 1;
+			ctx.fillStyle = backCol;
+			ctx.fillRect(0,0,canw,canh);
+		}
+		function one()
+		{
+			if(intr)clearInterval(intr);
 				if(current == 1)
 				{
 					clear();
@@ -46,13 +77,13 @@
 				clear();
 				circs = [];
 
-				one(1,canw/2,canh/2,Math.PI/2,canw/4);
-				one(1,canw/2,canh/2,-Math.PI/2,canw/4);
+				drawOne(1,canw/2,canh/2,Math.PI/2,canw/4);
+				drawOne(1,canw/2,canh/2,-Math.PI/2,canw/4);
 
 				var cx=250,cy=250, ang = 0, way = 1;
 				intr = setInterval(function()
 					{
-						ctx.fillStyle = "black";
+						ctx.fillStyle = backCol;
 						ctx.fillRect(0,0,canw,canh);
 						for(let c of circs)
 						{
@@ -77,32 +108,8 @@
 						}
 					}
 					,1000/30);
-
-			});
-			document.getElementById("two").addEventListener("click",two);
-			document.getElementById("three").addEventListener("click",three);
 		}
-		function randomColor()
-		{
-			return `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`;
-		}
-		function relativeCol(ox,oy,x,y)
-		{
-			//ctx.globalAlpha = Math.sqrt(Math.pow(x-ox,2)+Math.pow(y-oy,2));
-			//return randomColor();
-			return `rgb(${Math.abs(x-ox)},${(ox-oy)+Math.sqrt(Math.pow(ox-x,2)+Math.pow(oy-y,2))},${Math.abs(y-oy)})`
-		}
-		function relativeCol2(ox,oy,x,y)
-		{
-			return `rgb(${Math.abs(x-ox)},${.8*Math.sqrt(Math.pow(Math.abs(ox-x),2)+Math.pow(Math.abs(oy-y),2))},${Math.abs(y-oy)})`
-		}
-		function clear()
-		{
-			ctx.globalAlpha = 1;
-			ctx.fillStyle = "black";
-			ctx.fillRect(0,0,canw,canh);
-		}
-		function one(dep,x,y,ang,len)
+		function drawOne(dep,x,y,ang,len)
 		{
 			if(dep > 7){
 				circs.push([x,y]);
@@ -115,9 +122,9 @@
 				y -=dy;
 			}
 
-			one(dep+1,x,y,ang-(Math.PI/3),len/1.5);
-			one(dep+1,x,y,ang+(Math.PI/3),len/1.5);
-			one(dep+1,x,y,ang,len/1.5);
+			drawOne(dep+1,x,y,ang-(Math.PI/3),len/1.5);
+			drawOne(dep+1,x,y,ang+(Math.PI/3),len/1.5);
+			drawOne(dep+1,x,y,ang,len/1.5);
 
 		}
 
@@ -252,7 +259,7 @@
 				{
 					snek.move();
 					for(let tod of pre)
-						self.drawCell(tod.x,tod.y,"black");
+						self.drawCell(tod.x,tod.y,backCol);
 					for(let tod of snek.draw())
 						self.drawCell(tod.x,tod.y,"white");
 					
@@ -310,11 +317,10 @@
 		}
 		function three()
 		{
-			document.getElementById("bod").style.backgroundColor = randomColor();
+			backCol = randomColor();
+			document.getElementById("bod").style.backgroundColor = backCol;
+			clear();
 		}
-
-
-
 	</script>
 
 	<style>
