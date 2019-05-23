@@ -1,11 +1,4 @@
 body{
-	background-color: lightskyblue;
-	font-family: "Arial", san-serif;
-	font-size: 16pt;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-
 	-webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -14,21 +7,10 @@ body{
     -o-user-select: none;
     user-select: none;
 }
-canvas {
-	position: absolute;
-	left:0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-}
-.gamebutton{
-	background-color: lightgrey;
-	width: 40px;
-	height: 40px;
-	overflow: hidden;
-	border: 2px solid black;
-	border-radius: 50%;
-	font-size: 9pt;
+canvas
+{
+	width: 500px;
+	height: 500px;
 }
 #play{
 	background-image: url("play.png");
@@ -63,10 +45,6 @@ canvas {
 	font-size: 8pt;
 	border: 2px solid black;
 }
-.gamebutton:hover{
-	cursor: pointer;
-	background-color: lightgrey;
-}
 #buttonPanel{
 	text-align: center;
 	position: fixed;
@@ -81,16 +59,6 @@ canvas {
 	border: 2px solid black;
 	border-radius: 2px;
 	visibility: hidden;
-}
-#info{
-	background-color: beige;
-	border: 5px black solid;
-	font-family: "Arial", san-serif;
-	font-size: 12pt;
-	text-align: center;
-	padding: 2%;
-	border-radius: 20px;
-    overflow:hidden;
 }
 #buttonsToggle
 {
