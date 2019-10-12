@@ -1,3 +1,8 @@
+body, html
+{
+	overflow: hidden;
+}
+
 #orbit-space-1{
 	width: 300px;
 	height: 300px;
@@ -54,7 +59,7 @@
 	left:25px;
 	top:56px;
 	background-color:darkorange;
-	border-radius: 50%;	
+	border-radius: 50%;
 	display: block;
 }
 #orbiter-3{
@@ -151,5 +156,5 @@
 			height: 50px;
 			border-radius: 50%;
 			background-color: maroon;
-		}   
+		}
     }*/
