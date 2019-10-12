@@ -84,14 +84,19 @@ window.onload = function(){
 	document.getElementById("red").addEventListener("change",updateCol);
 	document.getElementById("green").addEventListener("change",updateCol);
 	document.getElementById("blue").addEventListener("change",updateCol);
-	document.getElementById("mode").addEventListener("change",function()
-		{
-			colMode = this.value;
-			if(colMode == 2)
-				document.getElementById("randomSel").style.visibility = "visible";
-			else
-				document.getElementById("randomSel").style.visibility = "hidden";
-		});
+
+	document.getElementById("setdefault").addEventListener("click",()=>{
+		colMode = 1;
+		document.getElementById("randomSel").style.visibility = "hidden";
+	});
+	document.getElementById("setrandom").addEventListener("click",()=>{
+		colMode = 2;
+		document.getElementById("randomSel").style.visibility = "visible";
+	});
+	document.getElementById("setpositional").addEventListener("click",()=>{
+		colMode = 3;
+		document.getElementById("randomSel").style.visibility = "hidden";
+	});
 
 	//-------Button Contols-------
 	var buttonView = function(){//Buttons view

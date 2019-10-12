@@ -36,49 +36,61 @@
 	    </ul>
 	  </div>
 	</nav>
-
-	<div id="container">
-	<canvas id="game" style="z-index: 0">	
-	</canvas>
-	<canvas id="grid" style="z-index: 1">	
-	</canvas>
-	</div>
 	<div id="buttonsToggle"></div>
-		<div id="buttonPanel">
+	<div class="container-fluid mb-0 h-100">
+	<div class="row">
+		<div class="btn-group-vertical">
+			<div class="dropdown">
+			  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Controls
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			    	<button id="play" class="dropdown-item">Play</button>
+					<button id="reset" class="dropdown-item">Reset</button>
+					<button id="random" class="dropdown-item">Mix</button>
+					<button id="toggleGrid" class="dropdown-item">Toggle Grid</button>
+			  </div>
+			</div> <!-- end controls dropdown -->
+			 
+			 <div class="input-group">
+			    <div class="input-group-prepend">
+			      <div class="input-group-text">Width</div>
+			    </div>
+			    <input type="number" id="cols" value="10" class="form-control">
+			  </div>
+
+			  <div class="input-group">
+			    <div class="input-group-prepend">
+			      <div class="input-group-text">Height</div>
+			    </div>
+			    <input type="number" id="rows" value="10" class="form-control">
+			  </div>
 			<div>
-				<button id="play" class="button-primary"></button>
-				<button id="reset" class="button-secondary"></button>
-				<button id="random" class="button-primary">Mix</button>
-				<button id="toggleGrid" class="button-prmary">Grid</button>
+				<div class="input-group-prepend">
+			      <div class="input-group-text">Mix Density</div>
+			    </div>
+				<input type="range" name="ranNum" min="1" max="100" value="40" id="ranNum" class="custom-range">
 			</div>
-			<hr>
 			<div>
-				<label float="left" for="rows">Height</label>
-				<input type="number" id="rows" value="10" class="ranges">
-			</div>
-			<div>
-				<label float="left" for="cols">Width</label>
-				<input type="number" id="cols" class="ranges" value="20"/>
-			</div>
-			<div>
-				<label float="left" for="ranNum">Density</label>
-				<input type="range" name="ranNum" min="1" max="100" value="40" id="ranNum" class="sliders">
-			</div>
-			<div>
-				<label float="left" for="speed">Speed</label>
-				<input type="range" name="speed" min="1" max="20" value="10" id="speed" class="sliders">
+				<div class="input-group-prepend">
+			      <div class="input-group-text">Play Speed</div>
+			    </div>
+				<input type="range" name="speed" min="1" max="20" value="10" id="speed" class="custom-range">
 			</div>
 			<hr>
 			<div id="colors">
-				<label float="left" for="mode">Mode</label>
-				<div>
-					<select id="mode">
-						<option value="1">Default</option>
-						<option value="2">Random</option>
-						<option value="3" selected>Relative</option>
-					</select>
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Color mode
+				  	</button>
+				  	<div class="dropdown-menu">
+						<button id="setdefault" class="dropdown-item">Default</button>
+						<button id="setrandom" class="dropdown-item">Random</button>
+						<button id="setpositional" class="dropdown-item">Positional</button>
+					</div>
 				</div>
-				<div id="randomSel">
+				</div>
+				<div id="randomSel" style="visibility: hidden;">
 					<label float="left" for="colors">Color</label>
 					<input type="range" name="red" min="1" max="255" value="255" id="red" class="sliders">
 					<label float="left" for="red">R</label>
@@ -87,9 +99,14 @@
 					<input type="range" name="blue" min="1" max="255" value="255" id="blue" class="sliders">
 					<label float="left" for="blue">B</label>
 				</div>
+			</div><!-- end button group -->		
+			<div class="d-flex col-lg-12">
+				<canvas id="game"></canvas>
+				<canvas id="grid"></canvas>
 			</div>
-				
-		</div>
+		
+		</div> <!-- end Row -->
+	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
