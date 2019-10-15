@@ -12,15 +12,12 @@ window.onload = function(){
 	gctx = grid.getContext('2d');
 
 	//-------Mouse Control-------
-		var mDown = false,
-		lastClick = {x:-1,y:-1},
-		MMVal = 1, //used for click and drag
+		var mDown = false;
+		var lastClick = {x:-1,y:-1};
+		var MMVal = 1; //used for click and drag
 
 	//-------Buttons-------
-		playButton = document.getElementById("play"),
-		buttonPanel = document.getElementById("buttonPanel"),
-		b_toggle = true,
-		pPix = ["url('play.png')","url('pause.png')"];
+		var playButton = document.getElementById("play");
 
 	//-------Colors-------
 		cRGB = {r:document.getElementById("red"),
@@ -38,7 +35,6 @@ window.onload = function(){
 				playing = false;
 				clearInterval(gameInterval);
 			}
-			playButton.style.backgroundImage = pPix[playing?1:0];
 		};
 
 	//-------Board Setup-------
@@ -99,21 +95,9 @@ window.onload = function(){
 	});
 
 	//-------Button Contols-------
-	var buttonView = function(){//Buttons view
-		if(b_toggle){
-			buttonPanel.style.visibility = "visible";
-			this.style.transform ="rotate(0deg)";
-		}
-		else{
-			buttonPanel.style.visibility = "hidden";
-			this.style.transform ="rotate(270deg)";
-		}
-		b_toggle = !b_toggle;//toggle button
-	};
 
 	var start = function(){//Play
 		playing = !playing;
-		playButton.style.backgroundImage = pPix[playing?1:0];
 		if(playing)
 			gameInterval = setInterval(gameLoop,1000/gSpeed);
 		else
@@ -125,7 +109,6 @@ window.onload = function(){
 		if (cols > 999) cols=1000;
 		if(rows > 999) rows=1000;
 		playing = false;
-		playButton.style.backgroundImage = pPix[0];
 		gameBoard.init(cols,rows);
 		useGrid = true;
 		gridToggle();
@@ -136,14 +119,13 @@ window.onload = function(){
 			for(var k = 0; k < gameBoard.rows; k++)
 				gameBoard.setCell(i,k,Math.floor(Math.random()*100) < odds? 1:0);
 	};
-	document.getElementById("buttonsToggle").addEventListener("click",buttonView);
 	playButton.addEventListener("click",start);
 	document.getElementById("speed").addEventListener("change",function(){
 		gSpeed = parseInt(document.getElementById("speed").value);
 		if(playing){
 			clearInterval(gameInterval);
 			gameInterval = setInterval(gameLoop,1000/gSpeed);
-		}	
+		}
 	});
 	document.getElementById("random").addEventListener("click",mix);
 	document.getElementById("toggleGrid").addEventListener("click",gridToggle);//Toggle grid
@@ -168,6 +150,7 @@ window.onload = function(){
 			default: break;
 		}
 	});
+
 	//-------For screen resizing--------
 	window.addEventListener("resize",function(){
 		styleWidth = parseInt(window.getComputedStyle(canvas).width);
@@ -192,18 +175,18 @@ function gridToggle()
 			gctx.beginPath();
 			gctx.moveTo(gameBoard.w*i,0);
 			gctx.lineTo(gameBoard.w*i,canvas.width);
-			gctx.stroke();	
+			gctx.stroke();
 		}
 		gctx.lineWidth = 5-(gameBoard.rows/333);
-		for (var i = 0; i < gameBoard.rows; i++) 
+		for (var i = 0; i < gameBoard.rows; i++)
 		{
 			gctx.beginPath();
 			gctx.moveTo(0,gameBoard.h*i);
 			gctx.lineTo(canvas.height,gameBoard.h*i);
-			gctx.stroke();	
+			gctx.stroke();
 		}
-		gctx.globalAlpha = 1;		
-	}		
+		gctx.globalAlpha = 1;
+	}
 }
 
 function getColor(i,k)
@@ -220,14 +203,14 @@ function getColor(i,k)
 }
 
 function updateCol()
-{	
+{
 	valRGB = {r:parseInt(cRGB.r.value),g:parseInt(cRGB.g.value),b:parseInt(cRGB.b.value)};
 }
 
 
 //Board "class"
 //handles board state, drawing, game logic
-function Board(){	
+function Board(){
 	this.init = function(cols,rows)
 	{
 		this.cols = cols;
@@ -237,15 +220,15 @@ function Board(){
 
 		ctx.fillRect(0,0,canvas.width,canvas.height,"white");
 		//ctx.globalAlpha = 1;
-		
+
 		this.borderWidth = [canvas.height/(rows*rows),canvas.width/(cols*cols)];
 		this.liveCells = [];
-		
+
 		var cells = [];
-		for (var i = 0; i < this.cols; i++) 
+		for (var i = 0; i < this.cols; i++)
 		{
 			var row = [];
-			for (var k = 0; k < this.rows; k++) 
+			for (var k = 0; k < this.rows; k++)
 			{
 				row.push(0);
 				this.drawCell(i,k,0);
@@ -269,12 +252,12 @@ function Board(){
 			}
 		}
 		//check each cell
-		for (var i = 0; i < this.cols; i++) 
+		for (var i = 0; i < this.cols; i++)
 		{
-			for (var k = 0; k < this.rows; k++) 
-			{				
+			for (var k = 0; k < this.rows; k++)
+			{
 				var n = this.nNeighbors(i,k,state);
-				
+
 				if(state[i][k] && (n < 2 || n > 3))
 					this.cells[i][k] = 0;
 				else if(!state[i][k] && n == 3)
@@ -296,16 +279,16 @@ function Board(){
 		var n = 0;
 		for (var i = 0; i < 8; i++)
 		{
-			var oX = x+offsets[i].x, 
+			var oX = x+offsets[i].x,
 				oY = y+offsets[i].y
-			oX = (oX < 0) ? this.cols-1: 
+			oX = (oX < 0) ? this.cols-1:
 				 (oX > this.cols-1) ? 0 : oX;
-			oY = (oY < 0) ? this.rows-1: 
+			oY = (oY < 0) ? this.rows-1:
 				 (oY > this.rows-1) ? 0 : oY;
 
-			if(state[oX][oY] == 1)n++;		
-		}	
-		return n;	
+			if(state[oX][oY] == 1)n++;
+		}
+		return n;
 	}
 
 	//draws a cell at x,y with the given value (1/0)
