@@ -1,0 +1,21 @@
+full_rebuild: true
+title: Gabe's Website
+description: Gabe Mertz's Github pages portfolio website
+github_username:  gmertz
+permalink: /:categories/:title/
+
+encoding: utf-8
+defaults:
+        -
+          scope:
+            path: ""
+          values:
+            layout: "default"
+            type: "standard"
+
+markdown: kramdown
+kramdown:
+        input: GFM
+        syntax-highlighter: rouge
+relative_permalinks: false
+exclude: [.git, .gitignore, sass, .sass-cache, package.json, README.md]
