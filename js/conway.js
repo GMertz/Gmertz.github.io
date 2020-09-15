@@ -213,6 +213,7 @@ function updateCol()
 function Board(){
 	this.init = function(cols,rows)
 	{
+		this.changedLastTick = {};
 		this.cols = cols;
 		this.rows = rows;
 		this.w = canvas.width/cols;
@@ -237,41 +238,6 @@ function Board(){
 		}
 		this.cells = cells;
 	}
-	//one tick, check all cells
-	this.tick = function()
-	{
-		//flag to see if anything has changed
-		var flag = 1;
-
-		//copy current board state
-		var state = Array(this.rows);
-		for(var i = 0; i < this.cols; i++){
-			state[i]=(Array(this.rows));
-			for(var k = 0; k < this.rows; k++){
-				state[i][k]=this.cells[i][k];
-			}
-		}
-		//check each cell
-		for (var i = 0; i < this.cols; i++)
-		{
-			for (var k = 0; k < this.rows; k++)
-			{
-				var n = this.nNeighbors(i,k,state);
-
-				if(state[i][k] && (n < 2 || n > 3))
-					this.cells[i][k] = 0;
-				else if(!state[i][k] && n == 3)
-					this.cells[i][k] = 1;
-
-				//only draw a cell if it has changed
-				if(this.cells[i][k] != state[i][k]){
-					this.drawCell(i,k,this.cells[i][k]);
-					flag = 0;
-				}
-			}
-		}
-		return flag;
-	}
 
 	//count the neighbors at (x,y) in a given state
 	this.nNeighbors = function(x,y,state)
@@ -289,6 +255,74 @@ function Board(){
 			if(state[oX][oY] == 1)n++;
 		}
 		return n;
+	}
+	//one tick, check all cells
+	this.tick = function()
+	{
+		let changed = [];
+		//flag to see if anything has changed
+		var flag = 1;
+
+		//copy current board state
+		var state = Array(this.rows);
+		for(var i = 0; i < this.cols; i++){
+			state[i]=(Array(this.rows));
+			for(var k = 0; k < this.rows; k++){
+				state[i][k] = this.cells[i][k];
+			}
+		}
+
+		// New check
+		/*
+		Iterate through all cells that changed last tick, and their neighbors
+		add any cells in this set that change to the cells that changed
+		*/
+
+		let keys = Object.keys(changedLastTick);
+		for (let i = 0; i < keys.length; i++)
+		{
+			let x = changedLastTick[keys];
+			for (var k = 0; k < x.length; k++)
+			{
+				y = row[k];
+				n = this.nNeighbors(x,y,state);
+				if(state[i][k] && (n < 2 || n > 3))
+					this.cells[i][k] = 0;
+				else if(!state[i][k] && n == 3)
+					this.cells[i][k] = 1;
+			}
+
+		}
+
+		/* -- Old check
+		//check each cell
+		for (var i = 0; i < this.cols; i++)
+		{
+			for (var k = 0; k < this.rows; k++)
+			{
+				var n = this.nNeighbors(i,k,state);
+
+				if(state[i][k] && (n < 2 || n > 3))
+					this.cells[i][k] = 0;
+				else if(!state[i][k] && n == 3)
+					this.cells[i][k] = 1;
+
+				//only draw a cell if it has changed
+				if(this.cells[i][k] != state[i][k])
+				{
+					changed.push({x:i,y:k});
+				}
+			}
+			*/
+
+		}
+
+		for (var i = 0; i < changed.length; i++)
+		{
+
+		}
+
+		return changed.length > 0 ? 1 : 0;
 	}
 
 	//draws a cell at x,y with the given value (1/0)
